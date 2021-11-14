@@ -7,34 +7,78 @@ $(timeHeading).append(displayTime);
 
 var currentTime = moment();
 
-var nineColor = $("#nineColor");
-var tenColor = $("#tenColor");
-var elevenColor = $("#elevenColor");
-var twelveColor = $("#twelveColor");
-var oneColor = $("#oneColor");
-var twoColor = $("#twoColor");
-var threeColor = $("#threeColor");
-var fourColor = $("#fourColor");
-var fiveColor = $("#fiveColor");
-
 var hoursArray = [
-  { time: moment("9", "H"), div: nineColor },
+  {
+    time: moment("9", "H"),
+    div: $("#nineColor"),
+    textArea: $("#nineText"),
+    locStorageKey: "9am",
+    saveButton: $("#nineSave"),
+  },
 
-  { time: moment("10", "H"), div: tenColor },
+  {
+    time: moment("10", "H"),
+    div: $("#tenColor"),
+    textArea: $("#tenText"),
+    locStorageKey: "10am",
+    saveButton: $("#tenSave"),
+  },
 
-  { time: moment("11", "H"), div: elevenColor },
+  {
+    time: moment("11", "H"),
+    div: $("#elevenColor"),
+    textArea: $("#elevenText"),
+    locStorageKey: "11am",
+    saveButton: $("#elevenSave"),
+  },
 
-  { time: moment("12", "H"), div: twelveColor },
+  {
+    time: moment("12", "H"),
+    div: $("#twelveColor"),
+    textArea: $("#twelveText"),
+    locStorageKey: "12pm",
+    saveButton: $("#twelveSave"),
+  },
 
-  { time: moment("13", "H"), div: oneColor },
+  {
+    time: moment("13", "H"),
+    div: $("#oneColor"),
+    textArea: $("#oneText"),
+    locStorageKey: "1pm",
+    saveButton: $("#oneSave"),
+  },
 
-  { time: moment("14", "H"), div: twoColor },
+  {
+    time: moment("14", "H"),
+    div: $("#twoColor"),
+    textArea: $("#twoText"),
+    locStorageKey: "2pm",
+    saveButton: $("#twoSave"),
+  },
 
-  { time: moment("15", "H"), div: threeColor },
+  {
+    time: moment("15", "H"),
+    div: $("#threeColor"),
+    textArea: $("#threeText"),
+    locStorageKey: "3pm",
+    saveButton: $("#threeSave"),
+  },
 
-  { time: moment("16", "H"), div: fourColor },
+  {
+    time: moment("16", "H"),
+    div: $("#fourColor"),
+    textArea: $("#fourText"),
+    locStorageKey: "4pm",
+    saveButton: $("#fourSave"),
+  },
 
-  { time: moment("17", "H"), div: fiveColor },
+  {
+    time: moment("17", "H"),
+    div: $("#fiveColor"),
+    textArea: $("#fiveText"),
+    locStorageKey: "5pm",
+    saveButton: $("#fiveSave"),
+  },
 ];
 
 //FUNCTION DECLARATIONS
@@ -42,7 +86,6 @@ var hoursArray = [
 function hoursCalc() {
   $.each(hoursArray, function (index, val) {
     //For the text area that is the current time, apply .present styling to .description
-
     if (moment().isAfter(val.time) && moment().isBefore(val.time.add(1, "h"))) {
       $(val.div).addClass("present");
     }
@@ -56,88 +99,15 @@ function hoursCalc() {
     else {
       $(val.div).addClass("past");
     }
+
+    //Saves user submitted details in the description classes to their respective key in localStorage when the user clicks on the save button for a time block
+    val.saveButton.click(function () {
+      localStorage.setItem(val.locStorageKey, val.textArea.val());
+    });
+
+    //Saved details are retrieved from localStorage
+    val.textArea.append(localStorage.getItem(val.locStorageKey));
   });
 }
 
-//When page reloads, the saved details are retrieved from localStorage
-function setDescriptions() {
-  var nineDesc = localStorage.getItem("9am");
-  $("#nineText").append(nineDesc);
-
-  var tenDesc = localStorage.getItem("10am");
-  $("#tenText").append(tenDesc);
-
-  var elevenDesc = localStorage.getItem("11am");
-  $("#elevenText").append(elevenDesc);
-
-  var twelveDesc = localStorage.getItem("12am");
-  $("#twelveText").append(twelveDesc);
-
-  var oneDesc = localStorage.getItem("1pm");
-  $("#oneText").append(oneDesc);
-
-  var twoDesc = localStorage.getItem("2pm");
-  $("#twoText").append(twoDesc);
-
-  var threeDesc = localStorage.getItem("3pm");
-  $("#threeText").append(threeDesc);
-
-  var fourDesc = localStorage.getItem("4pm");
-  $("#fourText").append(fourDesc);
-
-  var fiveDesc = localStorage.getItem("5pm");
-  $("#fiveText").append(fiveDesc);
-}
-
-//EVENT HANDLERS
-
-//Saves user submitted details in the description classes to their respective key in localStorage
-
-$("#nineSave").click(function () {
-  var nineInput = $("#nineText").val();
-  localStorage.setItem("9am", nineInput);
-});
-
-$("#tenSave").click(function () {
-  var tenInput = $("#tenText").val();
-  localStorage.setItem("10am", tenInput);
-});
-
-$("#elevenSave").click(function () {
-  var elevenInput = $("#elevenText").val();
-  localStorage.setItem("11am", elevenInput);
-});
-
-$("#twelveSave").click(function () {
-  var twelveInput = $("#twelveText").val();
-  localStorage.setItem("12pm", twelveInput);
-});
-
-$("#oneSave").click(function () {
-  var oneInput = $("#oneText").val();
-  localStorage.setItem("1pm", oneInput);
-});
-
-$("#twoSave").click(function () {
-  var twoInput = $("#twoText").val();
-  localStorage.setItem("2pm", twoInput);
-});
-
-$("#threeSave").click(function () {
-  var threeInput = $("#threeText").val();
-  localStorage.setItem("3pm", threeInput);
-});
-
-$("#fourSave").click(function () {
-  var fourInput = $("#fourText").val();
-  localStorage.setItem("4pm", fourInput);
-});
-
-$("#fiveSave").click(function () {
-  var fiveInput = $("#fiveText").val();
-  localStorage.setItem("5pm", fiveInput);
-});
-
 hoursCalc();
-
-setDescriptions();
