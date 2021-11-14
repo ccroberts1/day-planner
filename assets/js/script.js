@@ -1,4 +1,4 @@
-//Variable Declaration
+//VARIABLE DECLARATIONS
 
 //Current date displayed in the header
 var timeHeading = $("#currentDay");
@@ -7,54 +7,137 @@ $(timeHeading).append(displayTime);
 
 var currentTime = moment();
 
+var nineColor = $("#nineColor");
+var tenColor = $("#tenColor");
+var elevenColor = $("#elevenColor");
+var twelveColor = $("#twelveColor");
+var oneColor = $("#oneColor");
+var twoColor = $("#twoColor");
+var threeColor = $("#threeColor");
+var fourColor = $("#fourColor");
+var fiveColor = $("#fiveColor");
+
 var hoursArray = [
-  moment("9", "H"),
-  moment("10", "H"),
-  moment("11", "H"),
-  moment("12", "H"),
-  moment("13", "H"),
-  moment("14", "H"),
-  moment("15", "H"),
-  moment("16", "H"),
-  moment("17", "H"),
+  { time: moment("9", "H"), div: nineColor },
+
+  { time: moment("10", "H"), div: tenColor },
+
+  { time: moment("11", "H"), div: elevenColor },
+
+  { time: moment("12", "H"), div: twelveColor },
+
+  { time: moment("13", "H"), div: oneColor },
+
+  { time: moment("14", "H"), div: twoColor },
+
+  { time: moment("15", "H"), div: threeColor },
+
+  { time: moment("16", "H"), div: fourColor },
+
+  { time: moment("17", "H"), div: fiveColor },
 ];
 
-$.each(hoursArray, function (index, value) {
-  console.log(value.format("hA"));
-});
+//FUNCTION DECLARATIONS
 
-var hourCal = moment("9", "H");
+function hoursCalc() {
+  $.each(hoursArray, function (index, val) {
+    //For the text area that is the current time, apply .present styling to .description
 
-console.log(currentTime);
-console.log(hourCal);
+    if (moment().isAfter(val.time) && moment().isBefore(val.time.add(1, "h"))) {
+      $(val.div).addClass("present");
+    }
 
-console.log(currentTime.diff(hourCal, "hours"));
+    //For each text area that is earlier than the current time, apply .past styling to .description
+    else if (moment().isBefore(val.time)) {
+      $(val.div).addClass("future");
+    }
 
-//Find a way to compare the times in the .hour div to the current time. Maybe each div can have a moment() saved to a variable which is then compared to current time?
+    // //For each text area that is after the current time, apply .future styling to description.
+    else {
+      $(val.div).addClass("past");
+    }
+  });
+}
 
-//use variable.set() to test whether it works once js is configured
+//When page reloads, the saved details are retrieved from localStorage
+function setDescriptions() {
+  var nineDesc = localStorage.getItem("9am");
+  $("#nineText").append(nineDesc);
 
-//Function Declaration
+  var tenDesc = localStorage.getItem("10am");
+  $("#tenText").append(tenDesc);
 
-//For the text area that is the current time, apply .present styling to .description
-// if (currentTime.diff(hourCal, "hours") == 0) {
-//   $(".description").addClass("present");
-// }
+  var elevenDesc = localStorage.getItem("11am");
+  $("#elevenText").append(elevenDesc);
 
-// //For each text area that is earlier than the current time, apply .past styling to .description
-// else if (currentTime.diff(hourCal, "hours") < 0) {
-//   $(".description").addClass("past");
-// }
+  var twelveDesc = localStorage.getItem("12am");
+  $("#twelveText").append(twelveDesc);
 
-// //For each text area that is after the current time, apply .future styling to description.
-// else {
-//   $(".description").addClass("future");
-// }
+  var oneDesc = localStorage.getItem("1pm");
+  $("#oneText").append(oneDesc);
 
-//Add click event listener to .saveBtn
-//Saves input in textarea to localStorage
+  var twoDesc = localStorage.getItem("2pm");
+  $("#twoText").append(twoDesc);
+
+  var threeDesc = localStorage.getItem("3pm");
+  $("#threeText").append(threeDesc);
+
+  var fourDesc = localStorage.getItem("4pm");
+  $("#fourText").append(fourDesc);
+
+  var fiveDesc = localStorage.getItem("5pm");
+  $("#fiveText").append(fiveDesc);
+}
+
+//EVENT HANDLERS
+
+//Saves user submitted details in the description classes to their respective key in localStorage
 
 $("#nineSave").click(function () {
   var nineInput = $("#nineText").val();
-  localStorage.set("9am", nineInput);
+  localStorage.setItem("9am", nineInput);
 });
+
+$("#tenSave").click(function () {
+  var tenInput = $("#tenText").val();
+  localStorage.setItem("10am", tenInput);
+});
+
+$("#elevenSave").click(function () {
+  var elevenInput = $("#elevenText").val();
+  localStorage.setItem("11am", elevenInput);
+});
+
+$("#twelveSave").click(function () {
+  var twelveInput = $("#twelveText").val();
+  localStorage.setItem("12pm", twelveInput);
+});
+
+$("#oneSave").click(function () {
+  var oneInput = $("#oneText").val();
+  localStorage.setItem("1pm", oneInput);
+});
+
+$("#twoSave").click(function () {
+  var twoInput = $("#twoText").val();
+  localStorage.setItem("2pm", twoInput);
+});
+
+$("#threeSave").click(function () {
+  var threeInput = $("#threeText").val();
+  localStorage.setItem("3pm", threeInput);
+});
+
+$("#fourSave").click(function () {
+  var fourInput = $("#fourText").val();
+  localStorage.setItem("4pm", fourInput);
+});
+
+$("#fiveSave").click(function () {
+  var fiveInput = $("#fiveText").val();
+  localStorage.setItem("5pm", fiveInput);
+});
+
+hoursCalc();
+
+setDescriptions();
