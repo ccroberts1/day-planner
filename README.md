@@ -17,3 +17,7 @@ In addition, text entered into the time blocks is saved to local storage and per
 
 ## License
 MIT
+
+## Contact Info
+- Email: caitlin.coy.roberts@gmail.com
+- Twitter: https://twitter.com/caitlincroberts
