@@ -14,3 +14,6 @@ In addition, text entered into the time blocks is saved to local storage and per
 ## Link
 
 [Deployed application](https://ccroberts1.github.io/day-planner/)
+
+## License
+MIT
